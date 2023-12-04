@@ -8,14 +8,14 @@ Content-Type: application/json
     "fName": "Rabin",
     "lName": "Shah",
     "phone": "0481452920",
-    "email": "rabin9087@gmail.com",
+    "email": "rabin9085@gmail.com",
     "password": "1234"
 }
 
 #======== student user
 ### get students profile
 GET {{rootAPI}}/
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4N0BnbWFpbC5jb20iLCJpYXQiOjE3MDE2NTkyNDgsImV4cCI6MTcwMTY2MDE0OH0.mk9KCyTLb362rvHUHGAd8cqCZqPApB64nraYw66wX8Y
 
 ### create new students account
 POST {{rootAPI}}

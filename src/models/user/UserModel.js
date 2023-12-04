@@ -13,3 +13,8 @@ export const getUserByEmail = (email) => {
 //update
 
 //delete
+
+//add refreshJTW
+export const updateRefreshJWT = async(email, refreshJWT) => {
+    return await UserSchema.findOneAndUpdate({email}, {refreshJWT})
+}
