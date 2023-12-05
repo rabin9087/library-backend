@@ -19,3 +19,6 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4N0Bn
 
 ### create new students account
 POST {{rootAPI}}
+### 
+GET {{rootAPI}}/get-accessjwt
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4N0BnbWFpbC5jb20iLCJpYXQiOjE3MDE3NDU4MzksImV4cCI6MTcwNDMzNzgzOX0.J9C-shGI7cY3QcTFA8iDNHXZ7ACv8U9OqTiqVMW78Q0

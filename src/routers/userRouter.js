@@ -1,9 +1,10 @@
 import express from 'express'
-import { createUser, getUserByEmail } from '../models/user/UserModel.js';
+import { createUser, getUserByEmail, updateRefreshJWT } from '../models/user/UserModel.js';
 import { comparePassword, hashPassword } from '../utils/bcrypt.js';
 import { loginValidation, newUserValidation } from '../middleware/joiValidation.js';
 import { signJWTs } from '../utils/jwtHelper.js';
-import { userAuth } from '../middleware/authMiddleware.js';
+import { refreshAuth, userAuth } from '../middleware/authMiddleware.js';
+import { deleteSession } from '../models/session/SessionModel.js';
 const router = express.Router();
 
 router.post("/login", loginValidation, async (req, res, next) => {
@@ -27,6 +28,26 @@ router.post("/login", loginValidation, async (req, res, next) => {
         res.json({
             status: 'error',
             message: 'login failed, please try again'
+        })
+
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.post("/logout", async (req, res, next) => {
+    try {
+        const { accessJWT, email } = req.body
+
+            //remove from session table
+            accessJWT && await deleteSession({token: accessJWT})
+        
+            //update refreshJWt to "" in user table
+           email && await updateRefreshJWT(email, "")
+        
+        res.json({
+            status: 'success',
+            message: 'You have been loged out'
         })
 
     } catch (error) {
@@ -86,5 +107,7 @@ router.get("/", userAuth, async (req, res, next) => {
         next(error)
     }
 })
+
+router.get("/get-accessjwt", refreshAuth)
 
 export default router;
