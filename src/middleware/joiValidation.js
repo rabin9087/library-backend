@@ -14,7 +14,7 @@ const validationProcesser = ({ schemaObj, req, res, next }) => {
         //model what your validation is 
         const schema = Joi.object(schemaObj)
         const { error } = schema.validate(req.body)
-        console.log("schema.validate(req.body): ",schema.validate(req.body))
+        console.log("schema.validate(req.body): ", schema.validate(req.body))
         if (error) {
             return res.json({
                 status: 'error',
@@ -59,6 +59,19 @@ export const newBookValidation = (req, res, next) => {
         author: SORTSTRREQUIRED,
         publishYear: NUMBERREQUIRED,
         isbn: SORTSTRREQUIRED,
+        description: LONGSTRREQUIRED,
+    }
+    validationProcesser({ schemaObj, req, res, next })
+}
+
+export const updateBookValidation = (req, res, next) => {
+    const schemaObj = {
+        _id: SORTSTRREQUIRED,
+        status: SORTSTRREQUIRED,
+        thumbnail: LONGSTRREQUIRED,
+        name: SORTSTRREQUIRED,
+        author: SORTSTRREQUIRED,
+        publishYear: NUMBERREQUIRED,
         description: LONGSTRREQUIRED,
     }
     validationProcesser({ schemaObj, req, res, next })

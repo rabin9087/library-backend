@@ -9,11 +9,19 @@ export const getAllBooks = () => {
 }
 
 //read @filter must be an object
-export const getBook = (filter) => {
+export const getABook = (filter) => {
     return BookSchema.findOne(filter);
 }
 
+export const getBookById = (_id) => {
+    return BookSchema.findById(_id);
+}
+
+export const updateBookById = ({_id, ...rest}) => {
+    return BookSchema.findByIdAndUpdate(_id, rest);
+}
+
 //delete
-export const deleteBook = (filter) => {
-    return BookSchema.findOneAndDelete(filter);
+export const deleteBook = (_id) => {
+    return BookSchema.findByIdAndDelete(_id);
 }

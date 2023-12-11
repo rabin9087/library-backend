@@ -1,12 +1,15 @@
 import express from 'express'
-import { createBook, getAllBooks } from '../models/books/BookModel.js'
-import { userAuth } from '../middleware/authMiddleware.js';
-import { newBookValidation } from '../middleware/joiValidation.js';
+import { createBook, deleteBook, getAllBooks, getBookById, updateBookById } from '../models/books/BookModel.js'
+import { adminAuth, userAuth } from '../middleware/authMiddleware.js';
+import { newBookValidation, updateBookValidation } from '../middleware/joiValidation.js';
 const router = express.Router()
 
-router.get("/", async (req, res, next) => {
+
+
+router.get("/:_id?", async (req, res, next) => {
     try {
-        const books = await getAllBooks();
+        const { _id } = req.params
+        const books = _id ? await getBookById(_id) : await getAllBooks();
         res.json({
             status: "success",
             message: "User info are",
@@ -38,7 +41,7 @@ router.post("/", userAuth, newBookValidation, async (req, res, next) => {
 
     } catch (error) {
         console.log(error.message)
-        if(error.message.includes("E11000 dublicate key error")){
+        if (error.message.includes("E11000 dublicate key error")) {
             error.message = "There is another book that has similar ISBN. Please change ISBN and try again"
             error.errorCode = 200;
         }
@@ -46,5 +49,51 @@ router.post("/", userAuth, newBookValidation, async (req, res, next) => {
         next(error)
     }
 })
+
+router.put("/", adminAuth, updateBookValidation, async (req, res, next) => {
+    try {
+
+        const books = await updateBookById(req.body);
+
+        books?._id ?
+            res.json({
+                status: "success",
+                message: "The book has been updated successfully",
+                books,
+            }) :
+            res.json({
+                status: "error",
+                message: "Unable to update the book, please try again",
+                books,
+            })
+
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.delete("/:_id", adminAuth, async (req, res, next) => {
+    try {
+        const {_id} = req.params
+        const books = await deleteBook(_id);
+
+        books?._id ?
+            res.json({
+                status: "success",
+                message: "The book has been deleted successfully",
+                books,
+            }) :
+            res.json({
+                status: "error",
+                message: "Unable to delete the book, please try again",
+                books,
+            })
+
+    } catch (error) {
+
+        next(error)
+    }
+})
+
 
 export default router;

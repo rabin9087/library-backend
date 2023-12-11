@@ -34,8 +34,14 @@ GET {{rootAPI}}/get-accessjwt
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4N0BnbWFpbC5jb20iLCJpYXQiOjE3MDE3NDU4MzksImV4cCI6MTcwNDMzNzgzOX0.J9C-shGI7cY3QcTFA8iDNHXZ7ACv8U9OqTiqVMW78Q0
 
 ### //books api
-### GET new books
+### GET all books
 GET {{bookAPI}}
+
+
+### GET new books
+GET {{bookAPI}}/
+
+
 
 ### post new books
 POST {{bookAPI}}
