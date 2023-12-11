@@ -24,7 +24,6 @@ router.post("/login", loginValidation, async (req, res, next) => {
                 })
             }
         }
-
         res.json({
             status: 'error',
             message: 'login failed, please try again'

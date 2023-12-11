@@ -1,4 +1,5 @@
 @rootAPI = http://localhost:8000/api/v1/users
+@bookAPI = http://localhost:8000/api/v1/books
 
 #======== admin user
 POST {{rootAPI}}/admin-user
@@ -12,13 +13,40 @@ Content-Type: application/json
     "password": "1234"
 }
 
+###======== admin user
+POST {{rootAPI}}/login
+Content-Type: application/json
+
+{
+    "email": "rabin9085@gmail.com",
+    "password": "1234"
+}
+
 #======== student user
 ### get students profile
 GET {{rootAPI}}/
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4N0BnbWFpbC5jb20iLCJpYXQiOjE3MDE2NTkyNDgsImV4cCI6MTcwMTY2MDE0OH0.mk9KCyTLb362rvHUHGAd8cqCZqPApB64nraYw66wX8Y
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4N0BnbWFpbC5jb20iLCJpYXQiOjE3MDE3NTI5MzgsImV4cCI6MTcwMTc1MzgzOH0.kggMfJ6ENUvmja-Wf_SyhOfAdkxWIqrxF1vbTvrqstA
 
 ### create new students account
 POST {{rootAPI}}
 ### 
 GET {{rootAPI}}/get-accessjwt
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4N0BnbWFpbC5jb20iLCJpYXQiOjE3MDE3NDU4MzksImV4cCI6MTcwNDMzNzgzOX0.J9C-shGI7cY3QcTFA8iDNHXZ7ACv8U9OqTiqVMW78Q0
+
+### //books api
+### GET new books
+GET {{bookAPI}}
+
+### post new books
+POST {{bookAPI}}
+Content-Type:  application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4NUBnbWFpbC5jb20iLCJpYXQiOjE3MDE3NTQwMDYsImV4cCI6MTcwMTc1NDkwNn0.PjwVUU-vMjGvyUR1iOlDXKWrmgJ05AHgUVuQPxykrhE
+
+{
+    "thumbnail": "https://www.booktopia.com.au/covers/900/9781491952023/9357/javascript-the-definitive-guide.jpg",
+    "name": "JavaScript - The Definitive Guide",
+    "author": "David Flanagan",
+    "publishYear": 2020,
+    "isbn": "9781491952023",
+    "description": "JavaScript is the programming"
+}

@@ -7,7 +7,6 @@ export const signAccessJWT = (obj) => {
     const token =  jwt.sign(obj, process.env.JWT_ACCESS_SECRET, {
         expiresIn: "15m"
     });
-
     createSession({token})
     return token
 }
@@ -25,7 +24,7 @@ export const refreshJWTDecode = (refreshJWT) => {
 export const signRefreshJWT = (email) => {
     try {
         const token = jwt.sign({email}, process.env.JWT_REFRESH_SECRET, {
-            expiresIn: "30d" })
+            expiresIn: "30 days" })
             updateRefreshJWT(email, token)
             return token
     } catch (error) {

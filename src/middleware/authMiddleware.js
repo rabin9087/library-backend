@@ -4,8 +4,8 @@ import { accessJWTDecode, refreshJWTDecode, signAccessJWT } from "../utils/jwtHe
 
 export const userAuth = async (req, res, next) => {
     try {
-        console.log(req.headers)
         const { authorization } = req.headers
+        console.log(req.headers)
         //validate if accessJWT is validate
         const decoded = accessJWTDecode(authorization);
         console.log(decoded)

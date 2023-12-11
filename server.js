@@ -4,6 +4,7 @@ import cors from 'cors'
 import morgan from 'morgan';
 import userRouter from './src/routers/userRouter.js';
 import { connectDb } from './src/dbConfig/config.js';
+import bookRouter from './src/routers/bookRouter.js';
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -18,6 +19,7 @@ connectDb();
 
 //api endpoints
 app.use("/api/v1/users", userRouter)
+app.use("/api/v1/books", bookRouter)
 
 app.use("/", (req, res) => {
     res.json({
