@@ -1,15 +1,22 @@
 import express from 'express'
-import { createBook, deleteBook, getAllBooks, getBookById, updateBookById } from '../models/books/BookModel.js'
-import { adminAuth, userAuth } from '../middleware/authMiddleware.js';
+import { createBook, deleteBook, getABook, getAllBooks, getBookById, updateBookById } from '../models/books/BookModel.js'
+import { adminAuth, getUserFromAccessJWT, userAuth } from '../middleware/authMiddleware.js';
 import { newBookValidation, updateBookValidation } from '../middleware/joiValidation.js';
 const router = express.Router()
 
-
-
 router.get("/:_id?", async (req, res, next) => {
     try {
+        const {authorization} = req.headers
+        let filter = {status: "active"}
+        if(authorization) {
+            const user = await getUserFromAccessJWT(authorization);
+            if(user?.role === "admin"){
+                filter = {}
+            }
+        }
+       
         const { _id } = req.params
-        const books = _id ? await getBookById(_id) : await getAllBooks();
+        const books = _id ? await getABook({...filter, _id}) : await getAllBooks(filter);
         res.json({
             status: "success",
             message: "User info are",

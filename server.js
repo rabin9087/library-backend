@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import userRouter from './src/routers/userRouter.js';
 import { connectDb } from './src/dbConfig/config.js';
 import bookRouter from './src/routers/bookRouter.js';
+import burrowRouter from './src/routers/burrowRouter.js';
+import { userAuth } from './src/middleware/authMiddleware.js';
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -20,6 +22,7 @@ connectDb();
 //api endpoints
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/books", bookRouter)
+app.use("/api/v1/burrows", userAuth, burrowRouter)
 
 app.use("/", (req, res) => {
     res.json({
