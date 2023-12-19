@@ -1,10 +1,11 @@
 import express from 'express'
-import { createBurrow, getManyBurrow } from '../models/burrow/BurrowModel.js'
+import { createBurrow, getManyBurrow, updateBurrow } from '../models/burrow/BurrowModel.js'
 import { newBurrowValidation } from '../middleware/joiValidation.js';
 import { updateBookById } from '../models/books/BookModel.js';
 const router = express.Router()
 
 router.get("/", async (req, res, next) => {
+
     try {
 
         const { role, _id } = req.userInfo;
@@ -12,17 +13,13 @@ router.get("/", async (req, res, next) => {
         //if admin makes request, return all the burrow history, if logged in user make requests then
         //return their burrow only based on th euserId in burrow table
 
-        const burrows = role === "admin" ? await getManyBurrow() : await getManyBurrow({ userId: _id })
-        result.length ?
-            res.json({
-                status: "success",
-                message: 'Here is the list of burrow history',
-                burrows
-            }) :
-            res.json({
-                status: "error",
-                message: 'Unable to burrow this book, please contact adminstration'
-            })
+        const burrows = role === "admin" ? await getManyBurrow({}) : await getManyBurrow({ userId: _id })
+
+        res.json({
+            status: "success",
+            message: 'Here is the list of burrow history',
+            burrows
+        })
 
     } catch (error) {
         next(error)
@@ -58,6 +55,45 @@ router.post("/", newBurrowValidation, async (req, res, next) => {
     } catch (error) {
         next(error)
 
+    }
+})
+
+router.patch("/:_id", async (req, res, next) => {
+    try {
+        const { _id } = req.params;
+        const userId = req.userInfo;
+
+
+        const filter = { _id, userId }
+        const update = {
+            isReturned: true,
+            returnedDate: Date(),
+        }
+
+        const result = await updateBurrow({ _id }, update);
+
+        if (result?._id) {
+            const bookUpdate = {
+                _id: result.bookId,
+                isAvailable: true,
+                dueDate: null,
+            }
+            await updateBookById(bookUpdate)
+            return res.json({
+                status: "success",
+                message: "You have successfully returned the book. Thank you!",
+
+            })
+        }
+        res.json({
+            status: "error",
+            message: "Something went wrong! Please contact administration"
+            , result, userId,
+            _id
+        })
+
+    } catch (error) {
+        next(error)
     }
 })
 

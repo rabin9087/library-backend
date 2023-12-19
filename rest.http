@@ -1,5 +1,7 @@
 @rootAPI = http://localhost:8000/api/v1/users
 @bookAPI = http://localhost:8000/api/v1/books
+@burrowAPI = http://localhost:8000/api/v1/burrows
+@reviewAPI = http://localhost:8000/api/v1/reviews
 
 #======== admin user
 POST {{rootAPI}}/admin-user
@@ -9,7 +11,7 @@ Content-Type: application/json
     "fName": "Rabin",
     "lName": "Shah",
     "phone": "0481452920",
-    "email": "rabin9085@gmail.com",
+    "email": "rabin908gmail.com",
     "password": "1234"
 }
 
@@ -24,7 +26,7 @@ Content-Type: application/json
 
 #======== student user
 ### get students profile
-GET {{rootAPI}}/
+GET {{rootAPI}}
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4N0BnbWFpbC5jb20iLCJpYXQiOjE3MDE3NTI5MzgsImV4cCI6MTcwMTc1MzgzOH0.kggMfJ6ENUvmja-Wf_SyhOfAdkxWIqrxF1vbTvrqstA
 
 ### create new students account
@@ -38,7 +40,14 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4N0Bn
 GET {{bookAPI}}
 
 
+### get all-users
+GET {{rootAPI}}/all-users
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4NUBnbWFpbC5jb20iLCJpYXQiOjE3MDI4NjUyMDksImV4cCI6MTcwMjg2NjEwOX0.X36tf0_EFfPDIRfKzRkHuxSBtlKsQrl3yY80FYBixUw
+
+
+
 ### GET new books
+
 GET {{bookAPI}}/
 
 
@@ -56,3 +65,20 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4NUBn
     "isbn": "9781491952023",
     "description": "JavaScript is the programming"
 }
+
+
+### burrows endpoint
+
+###Get Burrows
+GET {{burrowAPI}}
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4NUBnbWFpbC5jb20iLCJpYXQiOjE3MDI5MDQxOTgsImV4cCI6MTcwMjkwNTA5OH0.vAZLjcMYl5dA84ns2myHf6ECc_RGcwMWDAfWNU-KMYc
+
+### Patch method
+PATCH {{burrowAPI}}/658049ca9a4e0f63cac3886a
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4NUBnbWFpbC5jb20iLCJpYXQiOjE3MDI5MDY2MzIsImV4cCI6MTcwMjkwNzUzMn0.VdO7HOxR0XDWYgpYZBInOznvQ39R9Xb8ZUFk97h-sGI
+
+
+########## ========== Reviews ========
+
+###GET all reviews
+GET {{reviewAPI}}

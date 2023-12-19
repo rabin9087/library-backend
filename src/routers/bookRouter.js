@@ -101,6 +101,4 @@ router.delete("/:_id", adminAuth, async (req, res, next) => {
         next(error)
     }
 })
-
-
 export default router;

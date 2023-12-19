@@ -12,7 +12,7 @@ export const getABurrow = (filter) => {
 
 //get many burrow as an array
 export const getManyBurrow = (filter) => {
-    return BurrowSchema.findOne(filter);
+    return BurrowSchema.find(filter);
 }
 
 //update

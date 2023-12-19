@@ -1,9 +1,9 @@
 import express from 'express'
-import { createUser, getUserByEmail, updateRefreshJWT } from '../models/user/UserModel.js';
+import { createUser, getManyStudents, getUserByEmail, updateRefreshJWT } from '../models/user/UserModel.js';
 import { comparePassword, hashPassword } from '../utils/bcrypt.js';
 import { loginValidation, newUserValidation } from '../middleware/joiValidation.js';
 import { signJWTs } from '../utils/jwtHelper.js';
-import { refreshAuth, userAuth } from '../middleware/authMiddleware.js';
+import { adminAuth, refreshAuth, userAuth } from '../middleware/authMiddleware.js';
 import { deleteSession } from '../models/session/SessionModel.js';
 const router = express.Router();
 
@@ -54,22 +54,35 @@ router.post("/logout", async (req, res, next) => {
     }
 })
 
-router.post("/", (req, res, next) => {
+router.post("/", newUserValidation, async(req, res, next) => {
     try {
+        req.body.password = hashPassword(req.body.password);
 
+        const user = await createUser(req.body)
+
+        if (user?._id) {
+            return res.json({
+                status: 'success',
+                message: 'Your Account has been created successfully'
+            })
+        }
         res.json({
-            status: 'success',
-            message: 'To do create new user user'
+            status: 'error',
+            message: 'Unable to create user, please try again!'
         })
 
     } catch (error) {
+        if (error.message.includes("E11000 duplicate key error collection")) {
+            error.message = "User is already exist, please use different email"
+            error.errorCode = 200;
+        }
         next(error)
     }
 })
 
 //create admin user
 //below this router should be private
-router.post("/admin-user", newUserValidation, async (req, res, next) => {
+router.post("/admin-user", adminAuth, newUserValidation, async (req, res, next) => {
     try {
         req.body.password = hashPassword(req.body.password);
         req.body.role = 'admin';
@@ -106,6 +119,20 @@ router.get("/", userAuth, async (req, res, next) => {
         next(error)
     }
 })
+
+router.get("/all-users", adminAuth, async (req, res, next) => {
+    try{
+
+        const users = await getManyStudents()
+     res.json({
+         status: "success",
+         message: "User info are",
+         users,
+     })
+     } catch (error) {
+         next(error)
+     }
+ })
 
 router.get("/get-accessjwt", refreshAuth)
 
