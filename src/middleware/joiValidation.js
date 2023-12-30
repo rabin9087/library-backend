@@ -14,7 +14,6 @@ const validationProcesser = ({ schemaObj, req, res, next }) => {
         //model what your validation is 
         const schema = Joi.object(schemaObj)
         const { error } = schema.validate(req.body)
-        console.log("schema.validate(req.body): ", schema.validate(req.body))
         if (error) {
             return res.json({
                 status: 'error',
@@ -23,7 +22,7 @@ const validationProcesser = ({ schemaObj, req, res, next }) => {
         }
         next();
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 

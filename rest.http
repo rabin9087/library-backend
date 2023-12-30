@@ -5,13 +5,14 @@
 
 #======== admin user
 POST {{rootAPI}}/admin-user
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhYmluOTA4NUBnbWFpbC5jb20iLCJpYXQiOjE3MDMwNDg4NTQsImV4cCI6MTcwMzA0OTc1NH0.kxJ6ByW6eTw9m-JX_9x-I__mrsZsNupcXb5NX_V05Sw
 Content-Type: application/json
 
 {
     "fName": "Rabin",
     "lName": "Shah",
     "phone": "0481452920",
-    "email": "rabin908gmail.com",
+    "email": "rabin90l.com",
     "password": "1234"
 }
 

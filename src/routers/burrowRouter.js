@@ -88,8 +88,6 @@ router.patch("/:_id", async (req, res, next) => {
         res.json({
             status: "error",
             message: "Something went wrong! Please contact administration"
-            , result, userId,
-            _id
         })
 
     } catch (error) {

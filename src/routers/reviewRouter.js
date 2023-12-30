@@ -2,7 +2,7 @@ import express from 'express'
 import { updateBurrow } from '../models/burrow/BurrowModel.js'
 import { newReviewValidation } from '../middleware/joiValidation.js';
 import { adminAuth, userAuth } from '../middleware/authMiddleware.js';
-import { createReview, deleteReview, getManyReview } from '../models/review/ReviewModel.js';
+import { createReview, deleteReview, getManyReview, updateReview } from '../models/review/ReviewModel.js';
 const router = express.Router()
 
 router.get("/", async (req, res, next) => {
@@ -54,19 +54,19 @@ router.post("/", userAuth, newReviewValidation, async (req, res, next) => {
     }
 })
 
-router.delete("/:_id", adminAuth, async (req, res, next) => {
+router.patch("/:_id", adminAuth, async (req, res, next) => {
     try {
         const { _id } = req.params;
         const { status } = req.body;
 
-        if (['active. inactive'].includes(status)) {
+        if (['active', 'inactive'].includes(status)) {
             const result = await updateReview({ _id }, { status })
 
             if (result?._id) {
 
                 return res.json({
                     status: "success",
-                    message: "The review has been updated. Thank you!",
+                    message: "The review has been updated successfully. Thank you!",
                 })
             }
         }
@@ -74,8 +74,6 @@ router.delete("/:_id", adminAuth, async (req, res, next) => {
         res.json({
             status: "error",
             message: "Something went wrong! Please contact administration"
-            , result, userId,
-            _id
         })
 
     } catch (error) {
@@ -83,7 +81,7 @@ router.delete("/:_id", adminAuth, async (req, res, next) => {
     }
 })
 
-router.patch("/:_id", adminAuth, async (req, res, next) => {
+router.delete("/:_id", adminAuth, async (req, res, next) => {
     try {
         const { _id } = req.params;
         const result = await deleteReview();
@@ -92,16 +90,13 @@ router.patch("/:_id", adminAuth, async (req, res, next) => {
 
             return res.json({
                 status: "success",
-                message: "The review has been deleted. Thank you!",
+                message: "The review has been deleted successfully. Thank you!",
             })
-
         }
-
         res.json({
             status: "error",
             message: "Something went wrong! Please contact administration"
-            , result, userId,
-            _id
+           
         })
 
     } catch (error) {

@@ -19,7 +19,7 @@ router.get("/:_id?", async (req, res, next) => {
         const books = _id ? await getABook({...filter, _id}) : await getAllBooks(filter);
         res.json({
             status: "success",
-            message: "User info are",
+            message: "Here are the books",
             books,
         })
     } catch (error) {
@@ -59,9 +59,8 @@ router.post("/", userAuth, newBookValidation, async (req, res, next) => {
 
 router.put("/", adminAuth, updateBookValidation, async (req, res, next) => {
     try {
-
         const books = await updateBookById(req.body);
-
+        
         books?._id ?
             res.json({
                 status: "success",
