@@ -17,6 +17,10 @@ const reviewSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         required: true,
     },
+    userName: {
+        type: String,
+        required: true,
+    },
     bookName: {
         type: String,
         required: true,
@@ -33,7 +37,7 @@ const reviewSchema = new mongoose.Schema({
         type: Number,
         default: 5,
     },
-   
+
 }, {
     timestamps: true,
 })

@@ -27,7 +27,7 @@ router.get("/:_id?", async (req, res, next) => {
     }
 })
 
-router.post("/", userAuth, newBookValidation, async (req, res, next) => {
+router.post("/", adminAuth, newBookValidation, async (req, res, next) => {
     try {
         if (req.userInfo.role !== "admin") {
             throw new Error("You do not have permission to this page")
@@ -43,11 +43,10 @@ router.post("/", userAuth, newBookValidation, async (req, res, next) => {
             res.json({
                 status: "error",
                 message: "Unable to add new book, please try again",
-                books,
             })
 
     } catch (error) {
-        console.log(error.message)
+        
         if (error.message.includes("E11000 dublicate key error")) {
             error.message = "There is another book that has similar ISBN. Please change ISBN and try again"
             error.errorCode = 200;

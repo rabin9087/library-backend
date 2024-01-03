@@ -87,7 +87,7 @@ export const newBurrowValidation = (req, res, next) => {
         userId: SORTSTRREQUIRED,
         userName: SORTSTRREQUIRED,
 
-        
+
     }
     validationProcesser({ schemaObj, req, res, next })
 }
@@ -96,12 +96,13 @@ export const newReviewValidation = (req, res, next) => {
     const schemaObj = {
         bookId: SORTSTRREQUIRED,
         bookName: SORTSTRREQUIRED,
+        userName: SORTSTRREQUIRED,
         message: LONGSTRREQUIRED,
         burrowHistoryId: SORTSTRREQUIRED,
         title: SORTSTRREQUIRED,
         rating: NUMBERREQUIRED,
 
-        
+
     }
     validationProcesser({ schemaObj, req, res, next })
 }
