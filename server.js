@@ -9,7 +9,7 @@ import burrowRouter from './src/routers/burrowRouter.js';
 import reviewRouter from './src/routers/reviewRouter.js';
 import { userAuth } from './src/middleware/authMiddleware.js';
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 
 //middleware
 
