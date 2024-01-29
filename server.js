@@ -26,8 +26,8 @@ app.use("/api/v1/books", bookRouter)
 app.use("/api/v1/reviews", reviewRouter)
 app.use("/api/v1/burrows", userAuth, burrowRouter)
 
-app.use("/", (req, res) => {
-    res.status(200).json({
+app.get("/", (req, res) => {
+    res.json({
         status: "success",
         message: "Server is running well"
     })
